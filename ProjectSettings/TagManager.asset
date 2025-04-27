@@ -9,6 +9,8 @@ TagManager:
   - Breakable
   - Pushable
   - Hasi
+  - halfpipe
+  - liane
   layers:
   - Default
   - TransparentFX
