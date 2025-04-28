@@ -3,6 +3,8 @@ using UnityEngine;
 public class Pushable : MonoBehaviour
 {
     private Rigidbody2D rb;  // Rigidbody2D des Objekts
+    private float mass; // Gewicht des Objects
+    private float linearDamping; // Reibung mit Boden
 
     void Start()
     {
