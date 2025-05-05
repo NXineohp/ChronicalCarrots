@@ -32,6 +32,11 @@ public class Armi : MonoBehaviour
         boostStartPosition = transform.position;
     }
 
+    public bool getIsRounded()
+    {
+        return isRounded;
+    }
+
     void Update()
     {
         float moveX = 0f;
