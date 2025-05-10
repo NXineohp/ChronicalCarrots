@@ -17,14 +17,14 @@ public class Pushable : MonoBehaviour
         {
             // Erlaube die Bewegung in alle Richtungen, X wird nicht eingefroren
             rb.bodyType = RigidbodyType2D.Dynamic;  // Setzt den Rigidbody auf dynamisch
-            rb.constraints = RigidbodyConstraints2D.None;  // Keine Einschränkungen für die Bewegung
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation; // Einschrönkung nur in Z - Achse (Rotieren)
             Debug.Log("Objekt wird von Armi bewegt, X ist nicht eingefroren!");
         }
         else if (collision.gameObject.CompareTag("Hasi"))
         {
             // Blockiere die Bewegung auf der X-Achse (freeze)
             rb.bodyType = RigidbodyType2D.Dynamic;  // Setzt den Rigidbody auf dynamisch
-            rb.constraints = RigidbodyConstraints2D.FreezePositionX;  // X-Achse einfrieren
+            rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;  // X-Achse einfrieren
             Debug.Log("Objekt darf nicht von Hasi bewegt werden, X ist eingefroren!");
         }
     }

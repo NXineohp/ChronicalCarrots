@@ -10,7 +10,6 @@ public class Elevate : MonoBehaviour
     public float delayBeforeElevate = 2f;
     private float currentHeight;
 
-    private bool isElevate = false;
     private bool moveToOriginalPosition = false;
 
     private Vector2 originalPosition;
