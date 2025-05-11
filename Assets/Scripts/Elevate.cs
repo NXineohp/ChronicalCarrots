@@ -1,76 +1,102 @@
 using UnityEngine;
-using System.Collections;  // Für die Coroutine
+using System.Collections;
 
-public class Elevate : MonoBehaviour
+public class Elevator : MonoBehaviour
 {
-    private Rigidbody2D rb;
+    [Header("Bewegung")]
+    public float moveSpeed = 2f;
+    public float targetHeight = 5f;
+    public float delayBeforeElevate = 1f;
 
-    public float moveSpeed;
-    public float targetHeight;
-    public float delayBeforeElevate = 2f;
-    private float currentHeight;
-
-    private bool moveToOriginalPosition = false;
+    [Header("Trigger")]
+    public bool isTriggerable = true;
 
     private Vector2 originalPosition;
+    private float currentHeight;
 
+    private Coroutine elevatorCoroutine = null;
+    private bool isAtTop = false;
+    private int armiCount = 0;
 
-    void Start()
+    private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        originalPosition = transform.position; // Speichert die aktuelle Position ab
+        originalPosition = transform.position;
         currentHeight = transform.position.y;
-        Debug.Log("Start-Methode ausgeführt!");
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Armi"))
         {
-            if (moveToOriginalPosition == false)
+            armiCount++;
+
+            if (!isTriggerable)
             {
-                StartCoroutine(ElevateWithDelayUp());
-            }
-            else
-            {
-                StartCoroutine(ElevateWithDelayDown());
+                if (!isAtTop)
+                {
+                    StartElevator();
+                }
+                // Wenn er oben ist, nichts tun – warten bis Armi runtergeht
             }
         }
     }
 
-    // Coroutine für die Bewegung
-
-    private IEnumerator ElevateWithDelayUp()
+    private void OnCollisionExit2D(Collision2D collision)
     {
-        yield return new WaitForSeconds(delayBeforeElevate); // Verzögerung abwarten, bevor die Bewegung startet
+        if (collision.gameObject.CompareTag("Armi"))
+        {
+            armiCount = Mathf.Max(armiCount - 1, 0);
+
+            if (!isTriggerable && isAtTop && armiCount == 0)
+            {
+                StopAndReturn();
+            }
+        }
+    }
+
+    public void StartElevator()
+    {
+        Debug.Log("Elevator started");
+        if (elevatorCoroutine != null)
+            StopCoroutine(elevatorCoroutine);
+
+        elevatorCoroutine = StartCoroutine(ElevateUp());
+    }
+
+    public void StopAndReturn()
+    {
+        Debug.Log("Elevator stopped and returning");
+        if (elevatorCoroutine != null)
+            StopCoroutine(elevatorCoroutine);
+
+        elevatorCoroutine = StartCoroutine(ElevateDown());
+    }
+
+    private IEnumerator ElevateUp()
+    {
+        yield return new WaitForSeconds(delayBeforeElevate);
 
         while (currentHeight < originalPosition.y + targetHeight)
         {
             currentHeight = Mathf.MoveTowards(currentHeight, originalPosition.y + targetHeight, moveSpeed * Time.deltaTime);
             transform.position = new Vector2(transform.position.x, currentHeight);
-            Debug.Log("Elevating: " + currentHeight);
-
-            yield return null; // Solange die Zielhöhe noch nicht erreicht ist, warten
-
-            if (Mathf.Approximately(currentHeight, originalPosition.y + targetHeight)) { moveToOriginalPosition = true; break; }
+            yield return null;
         }
 
-        Debug.Log("Bewegung abgeschlossen!"); // Wenn das Ziel erreicht ist, beende die Coroutine
+        isAtTop = true;
+        elevatorCoroutine = null;
     }
 
-    private IEnumerator ElevateWithDelayDown()
+    private IEnumerator ElevateDown()
     {
-        yield return new WaitForSeconds(delayBeforeElevate);
-
         while (currentHeight > originalPosition.y)
         {
             currentHeight = Mathf.MoveTowards(currentHeight, originalPosition.y, moveSpeed * Time.deltaTime);
             transform.position = new Vector2(transform.position.x, currentHeight);
-            Debug.Log("Elevating: " + currentHeight);
-
             yield return null;
-
-            if (Mathf.Approximately(currentHeight, originalPosition.y)) { moveToOriginalPosition = false; break; }
         }
+
+        isAtTop = false;
+        elevatorCoroutine = null;
     }
 }

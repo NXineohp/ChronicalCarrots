@@ -2222,6 +2222,7 @@ MonoBehaviour:
   moveSpeed: 2
   targetHeight: 2.16
   delayBeforeElevate: 2
+  isTriggerable: 0
 --- !u!61 &2050897181
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2443,6 +2444,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6de522313615714baff8137419f0e23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startPosition: {x: 0, y: 0}
+  endPosition: {x: 0, y: 0}
+  speed: 2
+  waitTime: 1
 --- !u!1 &2110849284
 GameObject:
   m_ObjectHideFlags: 0
