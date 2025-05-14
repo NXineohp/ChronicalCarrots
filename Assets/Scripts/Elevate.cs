@@ -56,7 +56,6 @@ public class Elevator : MonoBehaviour
 
     public void StartElevator()
     {
-        Debug.Log("Elevator started");
         if (elevatorCoroutine != null)
             StopCoroutine(elevatorCoroutine);
 
@@ -65,7 +64,6 @@ public class Elevator : MonoBehaviour
 
     public void StopAndReturn()
     {
-        Debug.Log("Elevator stopped and returning");
         if (elevatorCoroutine != null)
             StopCoroutine(elevatorCoroutine);
 
