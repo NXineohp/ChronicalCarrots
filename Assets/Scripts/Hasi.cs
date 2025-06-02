@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerWASD : MonoBehaviour
 {
@@ -6,8 +6,13 @@ public class PlayerWASD : MonoBehaviour
     public float jumpForce = 13f;
     private Rigidbody2D rb;
     private bool isGrounded = false;
+    private Vector2 respawnPoint;
 
-    void Start() => rb = GetComponent<Rigidbody2D>();
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        respawnPoint = transform.position; // ⬅️ Setzt initialen Respawn-Punkt
+    }
 
     void Update()
     {
@@ -33,5 +38,22 @@ public class PlayerWASD : MonoBehaviour
     {
         if (collision.collider.CompareTag("Ground"))
             isGrounded = false;
+    }
+
+    public void SetRespawnPoint(Vector2 point)
+    {
+        respawnPoint = point;
+    }
+
+    public void Respawn()
+    {
+        transform.position = respawnPoint;
+        rb.linearVelocity = Vector2.zero;
+        isGrounded = false;
+    }
+
+    public void Die()
+    {
+        Respawn();
     }
 }

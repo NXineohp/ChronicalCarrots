@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Armi : MonoBehaviour
 {
@@ -25,11 +25,14 @@ public class Armi : MonoBehaviour
     public Sprite roundSprite;
     public Sprite normalSprite;
 
+    private Vector2 respawnPoint;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         normalScale = transform.localScale;
         boostStartPosition = transform.position;
+        respawnPoint = transform.position; // ⬅️ Setzt initialen Respawn-Punkt
     }
 
     public bool getIsRounded()
@@ -150,5 +153,29 @@ public class Armi : MonoBehaviour
         {
             isOnHalfpipe = false;
         }
+    }
+
+    public void SetRespawnPoint(Vector2 point)
+    {
+        respawnPoint = point;
+    }
+
+    public void Respawn()
+    {
+        transform.position = respawnPoint;
+        rb.linearVelocity = Vector2.zero; // Reset velocity
+        isRounded = false; // Reset rounded state
+        transform.localScale = normalScale; // Reset scale
+        GetComponent<SpriteRenderer>().color = Color.blue; // Reset color
+        GetComponent<SpriteRenderer>().sprite = normalSprite; // Reset sprite
+        isBoosting = false; // Reset boosting state
+        boostTimer = 0f; // Reset boost timer
+        canBoost = false; // Reset boost availability
+        lastMoveDirection = 0; // Reset last move direction
+    }
+
+    public void Die()
+    {
+        Respawn();
     }
 }
