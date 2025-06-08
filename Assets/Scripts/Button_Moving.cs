@@ -13,7 +13,7 @@ public class PressurePlateMover : MonoBehaviour
     public float moveSpeed = 2f;
 
     private Vector3 originalPosition;
-    private bool isHasiOnPlate = false;
+    private bool charactersOnPlate = false;
 
     private void Start()
     {
@@ -30,19 +30,19 @@ public class PressurePlateMover : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Hasi"))
+        if (other.CompareTag("Hasi") || other.CompareTag("Armi"))
         {
             Debug.Log("Hais");
-            isHasiOnPlate = true;
+            charactersOnPlate = true;
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Hasi"))
+        if (other.CompareTag("Hasi") || other.CompareTag("Armi"))
         {
             Debug.Log("Hais");
-            isHasiOnPlate = false;
+            charactersOnPlate = false;
         }
     }
 
@@ -50,7 +50,7 @@ public class PressurePlateMover : MonoBehaviour
     {
         if (targetObject == null) return;
         Debug.Log("UPDATING");
-        Vector3 targetPos = isHasiOnPlate ? activatedPosition : originalPosition;
+        Vector3 targetPos = charactersOnPlate ? activatedPosition : originalPosition;
 
         targetObject.position = Vector3.MoveTowards(
             targetObject.position,

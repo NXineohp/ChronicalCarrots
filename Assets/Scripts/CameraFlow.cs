@@ -4,6 +4,8 @@ public class CameraFlow : MonoBehaviour
 {
     public float minX = -10f;
     public float maxX = 50f;
+    public float minY = 0f;
+    public float maxY = 100f;
     public float smoothSpeed = 5f;
 
     private Transform hasi;
@@ -29,12 +31,14 @@ public class CameraFlow : MonoBehaviour
 
         // Mittelwert der X-Positionen
         float targetX = (hasi.position.x + armi.position.x) / 2f;
+        float targetY = (hasi.position.y + armi.position.y) / 2f;
 
         // Begrenzung auf minX und maxX
         targetX = Mathf.Clamp(targetX, minX, maxX);
+        targetY = Mathf.Clamp(targetY, minY, maxY);
 
         // Zielposition nur auf X-Achse
-        Vector3 targetPosition = new Vector3(targetX, transform.position.y, transform.position.z);
+        Vector3 targetPosition = new Vector3(targetX, targetY, transform.position.z);
 
         // Smooth Follow
         transform.position = Vector3.Lerp(transform.position, targetPosition, smoothSpeed * Time.deltaTime);
