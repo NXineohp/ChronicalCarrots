@@ -1,4 +1,4 @@
-Shader "Custom/SpotlightShader"
+﻿Shader "Custom/SpotlightShader"
 {
     Properties
     {

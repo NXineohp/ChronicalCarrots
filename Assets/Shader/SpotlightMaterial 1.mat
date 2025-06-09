@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SpotlightMaterial
-  m_Shader: {fileID: 4800000, guid: 78d06b078b7947f40b185bd69a84fd67, type: 3}
+  m_Name: SpotlightMaterial 1
+  m_Shader: {fileID: 4800000, guid: 4638b3440c95a6648bef6f3a901de681, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -43,9 +43,13 @@ Material:
     m_Floats:
     - _EnableExternalAlpha: 0
     - _Radius: 0.0900074
+    - _Radius1: 999
+    - _Radius2: 999
     - _ZWrite: 0
     m_Colors:
     - _Center: {r: 0.5, g: 0.5, b: 0, a: 0}
+    - _Center1: {r: 0.47196436, g: 1.0675755, b: 0, a: 0}
+    - _Center2: {r: 0.52792275, g: -0.92267144, b: 0, a: 0}
     - _Color: {r: 0, g: 0, b: 0, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
