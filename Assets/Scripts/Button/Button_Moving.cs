@@ -1,7 +1,9 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class PressurePlateMover : MonoBehaviour
+public class Button_Moving : MonoBehaviour
 {
     [Header("Target Object to Move")]
     public Transform targetObject;
@@ -15,16 +17,19 @@ public class PressurePlateMover : MonoBehaviour
     private Vector3 originalPosition;
     private bool charactersOnPlate = false;
 
+    private HashSet<Transform> riders = new HashSet<Transform>();
+    private Vector3 lastTargetPosition;
+
+    private PlatformRiderTracker riderTracker;
+
     private void Start()
     {
         if (targetObject != null)
         {
-            Debug.Log("Target object found: " + targetObject.name);
             originalPosition = targetObject.position;
-        }
-        else
-        {
-            Debug.LogWarning("PressurePlateMover: targetObject is not assigned!");
+            lastTargetPosition = targetObject.position;
+
+            riderTracker = targetObject.GetComponent<PlatformRiderTracker>();
         }
     }
 
@@ -32,7 +37,6 @@ public class PressurePlateMover : MonoBehaviour
     {
         if (other.CompareTag("Hasi") || other.CompareTag("Armi"))
         {
-            Debug.Log("Hais");
             charactersOnPlate = true;
         }
     }
@@ -41,21 +45,50 @@ public class PressurePlateMover : MonoBehaviour
     {
         if (other.CompareTag("Hasi") || other.CompareTag("Armi"))
         {
-            Debug.Log("Hais");
             charactersOnPlate = false;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Hasi") || collision.gameObject.CompareTag("Armi"))
+        {
+            foreach (ContactPoint2D contact in collision.contacts)
+            {
+                if (contact.collider.transform == targetObject)
+                {
+                    riders.Add(collision.transform);
+                    break;
+                }
+            }
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Hasi") || collision.gameObject.CompareTag("Armi"))
+        {
+            riders.Remove(collision.transform);
         }
     }
 
     private void Update()
     {
         if (targetObject == null) return;
-        Debug.Log("UPDATING");
-        Vector3 targetPos = charactersOnPlate ? activatedPosition : originalPosition;
 
-        targetObject.position = Vector3.MoveTowards(
-            targetObject.position,
-            targetPos,
-            moveSpeed * Time.deltaTime
-        );
+        Vector3 targetPos = charactersOnPlate ? activatedPosition : originalPosition;
+        Vector3 oldPos = targetObject.position;
+        Vector3 newPos = Vector3.MoveTowards(oldPos, targetPos, moveSpeed * Time.deltaTime);
+        Vector3 movement = newPos - oldPos;
+
+        targetObject.position = newPos;
+
+        // Nur wenn Rider-Tracking vorhanden ist
+        if (riderTracker != null)
+        {
+            riderTracker.MoveRiders(movement);
+        }
+
+        lastTargetPosition = targetObject.position;
     }
 }

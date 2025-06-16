@@ -61,7 +61,6 @@ public class MovingPlatform : MonoBehaviour
         {
             foreach (ContactPoint2D contact in collision.contacts)
             {
-                Debug.Log("Rider detected: " + collision.transform.name);
                 riders.Add(collision.transform);
                 break;
             }
@@ -72,7 +71,6 @@ public class MovingPlatform : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Hasi") || collision.gameObject.CompareTag("Armi"))
         {
-            Debug.Log("Rider exited: " + collision.transform.name);
             riders.Remove(collision.transform);
         }
     }
