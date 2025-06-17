@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Button_ShowItem : MonoBehaviour
+public class Button_ShowItem : _Button_Parent
 {
     public GameObject itemToShow; // Das zu zeigende Objekt
     private bool triggered = false;
@@ -13,6 +13,7 @@ public class Button_ShowItem : MonoBehaviour
         {
             itemToShow.SetActive(true);
             triggered = true;
+            isActivated = true;
         }
     }
 }

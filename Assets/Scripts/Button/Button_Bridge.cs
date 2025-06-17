@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Button_Bridge : MonoBehaviour
+public class Button_Bridge : _Button_Parent
 {
     public bool isPressed = false;
 
@@ -10,6 +10,7 @@ public class Button_Bridge : MonoBehaviour
         {
             isPressed = true;
             Debug.Log($"{gameObject.name} wurde gedrückt.");
+            isActivated = true;
         }
     }
 
@@ -19,6 +20,7 @@ public class Button_Bridge : MonoBehaviour
         {
             isPressed = false;
             Debug.Log($"{gameObject.name} wurde losgelassen.");
+            isActivated = false;
         }
     }
 }

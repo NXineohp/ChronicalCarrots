@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Button_Elevator : MonoBehaviour
+public class Button_Elevator : _Button_Parent
 {
     public Elevator elevator;
 
@@ -9,6 +9,7 @@ public class Button_Elevator : MonoBehaviour
         if (other.CompareTag("Hasi"))
         {
             elevator.StartElevator();
+            isActivated = true;
         }
     }
 
@@ -17,6 +18,7 @@ public class Button_Elevator : MonoBehaviour
         if (other.CompareTag("Hasi"))
         {
             elevator.StopAndReturn();
+            isActivated = false;
         }
     }
 }

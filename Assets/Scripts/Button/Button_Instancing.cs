@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Button : MonoBehaviour
+public class Button : _Button_Parent
 {
     public GameObject breakablePrefab;  // Das Prefab von Breakable, das du instanziieren möchtest
 
@@ -26,6 +26,7 @@ public class Button : MonoBehaviour
                 // Instanziiere das Breakable an der angegebenen Position
                 Instantiate(breakablePrefab, spawnPosition, Quaternion.identity);
                 Debug.Log("Breakable-Instanz erstellt an Position: " + spawnPosition);
+                isActivated = true;  // Setze isActivated auf true, wenn das Breakable erstellt wurde
             }
             else
             {

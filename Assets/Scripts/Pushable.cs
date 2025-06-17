@@ -18,6 +18,7 @@ public class Pushable : MonoBehaviour
         {
             rb.bodyType = RigidbodyType2D.Dynamic;
             rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+            rb.gravityScale = 10f;
             Debug.Log("Objekt wird von Armi bewegt, X ist nicht eingefroren!");
         }
         else if (collision.gameObject.CompareTag("Hasi"))

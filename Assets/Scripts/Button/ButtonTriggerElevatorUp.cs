@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ElevatorTrigger : MonoBehaviour
+public class ElevatorTrigger : _Button_Parent
 {
     public ElevateUp elevator;
 
@@ -9,6 +9,7 @@ public class ElevatorTrigger : MonoBehaviour
         if (collision.gameObject.CompareTag("Hasi"))
         {
             elevator.StartElevator();
+            isActivated = true;
         }
     }
 }

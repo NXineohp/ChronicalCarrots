@@ -20,7 +20,7 @@ public class Pushable_Hasi : MonoBehaviour
                 if (contact.normal.y < -0.5f)
                 {
                     rb.bodyType = RigidbodyType2D.Dynamic;
-                    rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+                    rb.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionX;
                     Debug.Log("Hasi ist von oben draufgesprungen – Objekt fällt!");
                     break;
                 }
