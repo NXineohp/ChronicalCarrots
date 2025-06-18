@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      swinging axe 2x1_0: -2245408651523964751
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
