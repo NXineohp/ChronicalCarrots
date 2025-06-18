@@ -6,16 +6,19 @@ public class RespawnFlag : MonoBehaviour
     public Vector2? hasiSpawnPointOverride = null;
     public Vector2? armiSpawnPointOverride = null;
 
+    [Header("Active Flag Texture")]
+    public Sprite flagTexture = null;
+
     private bool hasiSet = false;
     private bool armiSet = false;
-    private SpriteRenderer flagHeadRenderer;
+    private SpriteRenderer flag;
 
     private void Start()
     {
-        Transform flagHead = transform.Find("FlagHead");
-        if (flagHead != null)
+        Transform flagSkin = transform.Find("Square");
+        if (flagSkin != null)
         {
-            flagHeadRenderer = flagHead.GetComponent<SpriteRenderer>();
+            flag = flagSkin.GetComponent<SpriteRenderer>();
         }
         else
         {
@@ -55,15 +58,11 @@ public class RespawnFlag : MonoBehaviour
 
     private void UpdateFlagColor()
     {
-        if (flagHeadRenderer == null) return;
+        if (flag == null) return;
 
-        if (hasiSet && armiSet)
+        if (hasiSet || armiSet)
         {
-            flagHeadRenderer.color = Color.green;
-        }
-        else if (hasiSet || armiSet)
-        {
-            flagHeadRenderer.color = new Color(1f, 0.5f, 0f);
+            flag.sprite = flagTexture;
         }
     }
 }
