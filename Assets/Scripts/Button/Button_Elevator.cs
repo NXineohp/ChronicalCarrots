@@ -6,7 +6,7 @@ public class Button_Elevator : _Button_Parent
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Hasi"))
+        if (other.CompareTag("Hasi") || other.CompareTag("Armi"))
         {
             elevator.StartElevator();
             isActivated = true;
@@ -15,7 +15,7 @@ public class Button_Elevator : _Button_Parent
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Hasi"))
+        if (other.CompareTag("Hasi") || other.CompareTag("Armi"))
         {
             elevator.StopAndReturn();
             isActivated = false;

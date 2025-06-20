@@ -5,14 +5,14 @@ using System.Collections.Generic;
 public class MovingPlatform : MonoBehaviour
 {
     [Header("Bewegung")]
-    public Vector2 startPosition;
-    public Vector2 endPosition;
+    public Vector3 startPosition;
+    public Vector3 endPosition;
     public float speed = 2f;
 
     [Header("Pause")]
     public float waitTime = 1f;
 
-    private Vector2 currentTarget;
+    private Vector3 currentTarget;
     private bool isMoving = true;
 
     private HashSet<Transform> riders = new HashSet<Transform>();
@@ -30,9 +30,9 @@ public class MovingPlatform : MonoBehaviour
         {
             if (isMoving)
             {
-                Vector2 oldPos = transform.position;
-                Vector2 newPos = Vector2.MoveTowards(oldPos, currentTarget, speed * Time.deltaTime);
-                Vector2 movement = newPos - oldPos;
+                Vector3 oldPos = transform.position;
+                Vector3 newPos = Vector2.MoveTowards(oldPos, currentTarget, speed * Time.deltaTime);
+                Vector3 movement = newPos - oldPos;
 
                 transform.position = newPos;
 
