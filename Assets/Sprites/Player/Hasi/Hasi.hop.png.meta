@@ -234,7 +234,12 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Hasi.hop_0: 6351667610181990145
+      Hasi.hop_1: -6043757058847247153
+      Hasi.hop_2: 6561451854835504289
+      Hasi.hop_3: 3523027792652061078
+      Hasi.hop_4: -4138711441274227719
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
