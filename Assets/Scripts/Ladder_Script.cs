@@ -9,6 +9,8 @@ public class LadderZone : MonoBehaviour
     private bool hasiInZone = false;
     private float originalGravity;
 
+    private PlayerWASD hasi;
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Hasi"))
@@ -16,6 +18,11 @@ public class LadderZone : MonoBehaviour
             hasiRb = other.GetComponent<Rigidbody2D>();
             if (hasiRb != null)
             {
+                hasi = other.gameObject.GetComponent<PlayerWASD>();
+                if (hasi != null)
+                {
+                    hasi.SetAnimBool("isClimbing", true);
+                }
                 hasiInZone = true;
                 originalGravity = hasiRb.gravityScale; // merken
                 hasiRb.gravityScale = 0f;
@@ -28,12 +35,18 @@ public class LadderZone : MonoBehaviour
     {
         if (other.CompareTag("Hasi") && hasiRb != null)
         {
+            hasi = other.gameObject.GetComponent<PlayerWASD>();
+            if (hasi != null)
+            {
+                hasi.SetAnimBool("isClimbing", false);
+            }
             ExitLadder();
         }
     }
 
     void Update()
     {
+
         if (!hasiInZone || hasiRb == null) return;
 
         if (Input.GetKey(KeyCode.W))

@@ -6,39 +6,33 @@ public class Armi : MonoBehaviour
     public float moveSpeed_Ball = 2f;
     public float boostSpeed = 10f;
     public float boostDuration = 0.5f;
-    public float rollingForce = 10f; // Force for sliding on halfpipe
+    public float rollingForce = 10f;
 
     public float requiredMoveDistance = 1f;
 
     private Rigidbody2D rb;
-    private Vector3 normalScale;
     private bool isRounded = false;
     private bool isBoosting = false;
     private float boostTimer = 0f;
     private Vector2 boostStartPosition;
     private bool canBoost = false;
 
-    private int lastMoveDirection = 0; // -1 = left, 1 = right
+    private int lastMoveDirection = 0;
 
-    private bool isOnHalfpipe = false; // Is player currently on a halfpipe?
-
-    public Sprite roundSprite;
-    public Sprite normalSprite;
-
+    private bool isOnHalfpipe = false;
     private Vector2 respawnPoint;
+
+    private Animator animator;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        normalScale = transform.localScale;
         boostStartPosition = transform.position;
-        respawnPoint = transform.position; // ⬅️ Setzt initialen Respawn-Punkt
+        respawnPoint = transform.position;
+        animator = GetComponent<Animator>();
     }
 
-    public bool getIsRounded()
-    {
-        return isRounded;
-    }
+    public bool getIsRounded() => isRounded;
 
     void Update()
     {
@@ -46,7 +40,17 @@ public class Armi : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftArrow)) moveX = -1f;
         if (Input.GetKey(KeyCode.RightArrow)) moveX = 1f;
 
-        // Boost timer countdown
+        // Flip Armi left/right
+        if (moveX < 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 180f, 0); // Look left
+        }
+        else if (moveX > 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 0f, 0); // Look right
+        }
+
+        // Boost countdown
         if (isBoosting)
         {
             boostTimer -= Time.deltaTime;
@@ -56,7 +60,7 @@ public class Armi : MonoBehaviour
             }
         }
 
-        // Only check movement if not rounded
+        // Check for boosting possibility
         if (!isRounded)
         {
             if (moveX != 0f)
@@ -82,33 +86,28 @@ public class Armi : MonoBehaviour
             }
         }
 
-        // Switching to rolling shape
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        // Switch to rolling form
+        if (Input.GetKeyDown(KeyCode.DownArrow) && !isRounded)
         {
-            if (!isRounded)
+            isRounded = true;
+
+            if (canBoost)
             {
-                transform.localScale = new Vector3(1f, 1f, 1f);
-                GetComponent<SpriteRenderer>().color = Color.green;
-                GetComponent<SpriteRenderer>().sprite = roundSprite;
-                isRounded = true;
-
-                if (canBoost)
-                {
-                    isBoosting = true;
-                    boostTimer = boostDuration;
-                }
-
-                canBoost = false;
-                lastMoveDirection = 0;
+                isBoosting = true;
+                boostTimer = boostDuration;
             }
+
+            canBoost = false;
+            lastMoveDirection = 0;
         }
         else if (!Input.GetKey(KeyCode.DownArrow) && isRounded)
         {
-            transform.localScale = normalScale;
-            GetComponent<SpriteRenderer>().color = Color.blue;
-            GetComponent<SpriteRenderer>().sprite = normalSprite;
             isRounded = false;
         }
+
+        // Set animator states
+        SetAnimBool("isRolling", isRounded);
+        SetAnimBool("isWalking", !isRounded && moveX != 0f);
     }
 
     void FixedUpdate()
@@ -121,20 +120,17 @@ public class Armi : MonoBehaviour
         {
             if (isOnHalfpipe && Input.GetKey(KeyCode.DownArrow))
             {
-                // Sliding on halfpipe when DownArrow pressed
                 Vector2 slideForce = new Vector2(moveX * rollingForce, 0f);
                 rb.AddForce(slideForce, ForceMode2D.Force);
             }
             else
             {
-                // Normal rolling movement (ball form but controllable)
                 float currentSpeed = isBoosting ? boostSpeed : moveSpeed_Ball;
                 rb.linearVelocity = new Vector2(moveX * currentSpeed, rb.linearVelocity.y);
             }
         }
         else
         {
-            // Normal walking
             rb.linearVelocity = new Vector2(moveX * moveSpeed, rb.linearVelocity.y);
         }
     }
@@ -155,6 +151,14 @@ public class Armi : MonoBehaviour
         }
     }
 
+    public void SetAnimBool(string paramName, bool value)
+    {
+        if (animator != null)
+        {
+            animator.SetBool(paramName, value);
+        }
+    }
+
     public void SetRespawnPoint(Vector2 point)
     {
         respawnPoint = point;
@@ -163,15 +167,16 @@ public class Armi : MonoBehaviour
     public void Respawn()
     {
         transform.position = respawnPoint;
-        rb.linearVelocity = Vector2.zero; // Reset velocity
-        isRounded = false; // Reset rounded state
-        transform.localScale = normalScale; // Reset scale
-        GetComponent<SpriteRenderer>().color = Color.blue; // Reset color
-        GetComponent<SpriteRenderer>().sprite = normalSprite; // Reset sprite
-        isBoosting = false; // Reset boosting state
-        boostTimer = 0f; // Reset boost timer
-        canBoost = false; // Reset boost availability
-        lastMoveDirection = 0; // Reset last move direction
+        rb.linearVelocity = Vector2.zero;
+        isRounded = false;
+        isBoosting = false;
+        boostTimer = 0f;
+        canBoost = false;
+        lastMoveDirection = 0;
+
+        // Reset Animator
+        SetAnimBool("isRolling", false);
+        SetAnimBool("isWalking", false);
     }
 
     public void Die()

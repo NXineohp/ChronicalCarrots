@@ -1,3 +1,5 @@
+﻿using NUnit.Framework;
+using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 
 public class SwingingLiana : MonoBehaviour
@@ -18,6 +20,17 @@ public class SwingingLiana : MonoBehaviour
 
     private bool returningToCenter = false;
 
+    public Sprite swingForwardSprite; // z.B. hasi.swing_1
+    public Sprite swingBackSprite;    // z.B. hasi.swing_6
+    private Sprite currentSprite;
+    private SpriteRenderer hasiRenderer;
+    private PlayerWASD hasi_Script;
+    private Animator Hasi_ANIMATOR;
+
+    private void Start()
+    {
+        currentSprite = swingForwardSprite; // Start with forward swing sprite
+    }
     void Update()
     {
         if (hasi == null && !returningToCenter)
@@ -52,8 +65,29 @@ public class SwingingLiana : MonoBehaviour
         else
         {
             float input = 0f;
-            if (Input.GetKey(KeyCode.A)) input = -1f;
-            if (Input.GetKey(KeyCode.D)) input = 1f;
+            if (Input.GetKey(KeyCode.A))
+            {
+                input = -1f;
+                Debug.Log("Swinging BACK");
+                currentSprite = swingBackSprite;
+            }
+
+            if (Input.GetKey(KeyCode.D))
+            {
+                input = 1f;
+                Debug.Log("Swinging FORWARD");
+                currentSprite = swingForwardSprite;
+            }
+
+            if (hasiRenderer != null)
+            {
+                Debug.Log("Updating Hasi sprite");
+                if (Hasi_ANIMATOR != null)
+                {
+                    Hasi_ANIMATOR.enabled = false;
+                }
+                hasiRenderer.sprite = currentSprite;
+            }
 
             float swingDirection = Mathf.Cos(timer);
 
@@ -111,6 +145,14 @@ public class SwingingLiana : MonoBehaviour
         {
             hasi = other.transform;
             hasiRb = hasi.GetComponent<Rigidbody2D>();
+            hasiRenderer = hasi.GetComponent<SpriteRenderer>();
+            Hasi_ANIMATOR = hasi.GetComponent<Animator>();
+
+            if (hasiRenderer == null)
+            {
+                Debug.LogWarning("hasiRenderer is NULL!");
+            }
+            hasi_Script = other.gameObject.GetComponent<PlayerWASD>();
 
             if (hasiRb != null)
             {
@@ -132,6 +174,16 @@ public class SwingingLiana : MonoBehaviour
                 hasiRb.isKinematic = false;
             }
 
+            PlayerWASD hasi = other.gameObject.GetComponent<PlayerWASD>();
+            hasi_Script = other.gameObject.GetComponent<PlayerWASD>();
+            hasi_Script.SetAnimBool("isSwinging", false);
+            Hasi_ANIMATOR = hasi.GetComponent<Animator>();
+            Hasi_ANIMATOR.enabled = true; // Re-enable animator
+            if (hasi != null)
+            {
+                hasi.TriggerAnim("isJumping");
+            }
+            hasiRenderer = null; // Clear sprite renderer reference
             hasi = null;
             hasiRb = null;
         }

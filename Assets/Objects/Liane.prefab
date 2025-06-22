@@ -210,6 +210,8 @@ MonoBehaviour:
   swingDamping: 1
   maxSwingSpeed: 5
   straightenSpeed: 1
+  swingForwardSprite: {fileID: 1197783062, guid: f0be0191cd51c234ebca85b14bfe84c8, type: 3}
+  swingBackSprite: {fileID: -1298610316, guid: f0be0191cd51c234ebca85b14bfe84c8, type: 3}
 --- !u!1 &5464944304229550455
 GameObject:
   m_ObjectHideFlags: 0

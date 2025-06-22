@@ -19,11 +19,25 @@ public class Pushable : MonoBehaviour
             rb.bodyType = RigidbodyType2D.Dynamic;
             rb.constraints = RigidbodyConstraints2D.FreezeRotation;
             rb.gravityScale = 10f;
+
+            // Armi Animation setzen
+            Armi armiScript = collision.gameObject.GetComponent<Armi>();
+            if (armiScript != null)
+            {
+                armiScript.SetAnimBool("isPushing", true);
+            }
+
             Debug.Log("Objekt wird von Armi bewegt, X ist nicht eingefroren!");
         }
         else if (collision.gameObject.CompareTag("Hasi"))
         {
             rb.bodyType = RigidbodyType2D.Dynamic;
+
+            PlayerWASD hasi = collision.gameObject.GetComponent<PlayerWASD>();
+            if (hasi != null)
+            {
+                hasi.SetAnimBool("isPushing", true);
+            }
 
             if (allowHasiPushX)
             {
@@ -37,4 +51,26 @@ public class Pushable : MonoBehaviour
             }
         }
     }
+
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Armi"))
+        {
+            Armi armiScript = collision.gameObject.GetComponent<Armi>();
+            if (armiScript != null)
+            {
+                armiScript.SetAnimBool("isPushing", false);
+            }
+        }
+        else if (collision.gameObject.CompareTag("Hasi"))
+        {
+            PlayerWASD hasi = collision.gameObject.GetComponent<PlayerWASD>();
+            if (hasi != null)
+            {
+                hasi.SetAnimBool("isPushing", false);
+            }
+        }
+    }
+
 }
