@@ -11,6 +11,15 @@ public class PlayerWASD : MonoBehaviour
     private Vector2 respawnPoint;
     public Animator animator;
 
+    public AudioClip swingSound;
+    public AudioClip jumpSound;
+    public AudioSource walkSource; // für Loop
+    public AudioSource pushSource; // für Loop
+    public AudioSource sfxSource; // für OneShots
+    public AudioSource climbSource; // für Loop
+
+    private bool wasSwinging = false;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -41,12 +50,36 @@ public class PlayerWASD : MonoBehaviour
         {
             animator.SetBool("isWalking", false);
         }
+
+        SetSound("isClimbing", climbSource);
+        SetSound("isPushing", pushSource);
+        if(animator.GetBool("isClimbing") || animator.GetBool("isPushing"))
+        {
+            walkSource.Stop(); // Stoppt den Geh-Sound, wenn Klettern oder Schieben aktiv ist
+        }
+        else
+        {
+            SetSound("isWalking", walkSource, isGrounded);
+        }
+
+        bool isSwinging = animator.GetBool("isSwinging");
+
+        if (isSwinging && !wasSwinging)
+        {
+            Debug.Log("Swinging started!");
+            // Spieler fängt gerade an zu schwingen → einmal Sound abspielen
+            sfxSource.PlayOneShot(swingSound);
+        }
+
+        wasSwinging = isSwinging; // Zustand fürs nächste Frame merken
+
         rb.linearVelocity = new Vector2(moveX * moveSpeed, rb.linearVelocity.y);
 
         if (Input.GetKeyDown(KeyCode.W) && isGrounded)
         {
             Debug.Log("Jumping!");
             animator.SetTrigger("isJumping");
+            sfxSource.PlayOneShot(jumpSound);
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         }
     }
@@ -100,6 +133,27 @@ public class PlayerWASD : MonoBehaviour
         if (animator != null)
         {
             animator.SetTrigger(paramName);
+        }
+    }
+
+    public void SetSound(string soundname, AudioSource source, bool value = true)
+    {
+        if (source != null)
+        {
+            if(animator.GetBool(soundname) && value)
+            {
+                if (!source.isPlaying)
+                {
+                    source.Play();
+                }
+            }
+            else
+            {
+                if (source.isPlaying)
+                {
+                    source.Stop();
+                }
+            }
         }
     }
 }

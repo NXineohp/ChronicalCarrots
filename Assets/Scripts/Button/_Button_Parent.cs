@@ -1,21 +1,49 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 
 public class _Button_Parent : MonoBehaviour
 {
     private float activeAngle = 180f;
     private float inactiveAngle = 0f;
+    public bool bloack_rotation = false;
 
-    // f¸r Kind-Klassen zug‰nglich
+    public AudioSource audioSource;
+
+    [Tooltip("Maximale Abspieldauer des Sounds in Sekunden (0 = unbeschr√§nkt)")]
+    public float maxSoundDuration = 0f;
+
     protected bool isActivated = false;
-
     private bool lastState = false;
 
     protected virtual void Update()
     {
         if (isActivated != lastState)
         {
-            RotateSelf(isActivated ? activeAngle : inactiveAngle);
             lastState = isActivated;
+
+            if (isActivated && audioSource != null)
+            {
+                audioSource.Play();
+
+                // Wenn eine max. Dauer gesetzt ist (> 0), nach Zeit stoppen
+                if (maxSoundDuration > 0f)
+                {
+                    CancelInvoke(nameof(StopSound)); // Sicherheitsma√ünahme
+                    Invoke(nameof(StopSound), maxSoundDuration);
+                }
+            }
+
+            if (bloack_rotation)
+                return;
+
+            RotateSelf(isActivated ? activeAngle : inactiveAngle);
+        }
+    }
+
+    private void StopSound()
+    {
+        if (audioSource != null && audioSource.isPlaying)
+        {
+            audioSource.Stop();
         }
     }
 

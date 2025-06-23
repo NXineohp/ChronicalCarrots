@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class CoopButton : MonoBehaviour
+public class CoopButton : _Button_Parent
 {
     public enum ButtonType { Hasi, Armi }
     public ButtonType buttonType;

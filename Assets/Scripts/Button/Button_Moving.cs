@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Button_Moving : MonoBehaviour
+public class Button_Moving : _Button_Parent
 {
     [Header("Target Object to Move")]
     public Transform targetObject;
@@ -74,6 +74,7 @@ public class Button_Moving : MonoBehaviour
 
     private void Update()
     {
+        isActivated = charactersOnPlate;
         if (targetObject == null) return;
 
         Vector3 targetPos = charactersOnPlate ? activatedPosition : originalPosition;
@@ -90,5 +91,7 @@ public class Button_Moving : MonoBehaviour
         }
 
         lastTargetPosition = targetObject.position;
+
+        base.Update();
     }
 }

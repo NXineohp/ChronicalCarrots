@@ -153,7 +153,7 @@ public class SwingingLiana : MonoBehaviour
                 Debug.LogWarning("hasiRenderer is NULL!");
             }
             hasi_Script = other.gameObject.GetComponent<PlayerWASD>();
-
+            hasi_Script.SetAnimBool("isSwinging", true);
             if (hasiRb != null)
             {
                 hasiRb.linearVelocity = Vector2.zero;

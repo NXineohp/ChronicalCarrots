@@ -24,6 +24,10 @@ public class Armi : MonoBehaviour
 
     private Animator animator;
 
+    public AudioSource walkSource; // für Loop
+    public AudioSource pushSource; // für Loop
+    public AudioSource rollingSource; // für OneShots
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -108,6 +112,18 @@ public class Armi : MonoBehaviour
         // Set animator states
         SetAnimBool("isRolling", isRounded);
         SetAnimBool("isWalking", !isRounded && moveX != 0f);
+
+        // 🔊 Soundsteuerung hinzufügen
+        SetSound("isRolling", rollingSource);
+        SetSound("isPushing", pushSource);
+        if (animator.GetBool("isRolling") || animator.GetBool("isPushing"))
+        {
+            walkSource.Stop(); // Stoppt den Geh-Sound, wenn Klettern oder Schieben aktiv ist
+        }
+        else
+        {
+            SetSound("isWalking", walkSource);
+        }
     }
 
     void FixedUpdate()
@@ -182,5 +198,26 @@ public class Armi : MonoBehaviour
     public void Die()
     {
         Respawn();
+    }
+
+    public void SetSound(string soundname, AudioSource source, bool value = true)
+    {
+        if (source != null)
+        {
+            if (animator.GetBool(soundname) && value)
+            {
+                if (!source.isPlaying)
+                {
+                    source.Play();
+                }
+            }
+            else
+            {
+                if (source.isPlaying)
+                {
+                    source.Stop();
+                }
+            }
+        }
     }
 }
