@@ -13,6 +13,11 @@ public class CountdownTimer : MonoBehaviour
     private float currentTime;
     private bool timerEnded = false;
 
+    public AudioSource bombAlarmLoop;      // 🔁 Wird jede Sekunde ab 15s gespielt
+    public AudioSource bombExplosionSound; // 💥 Explosion bei 0s
+
+    private float lastBeepTime = 0f;       // ⏱ Für 1-Sekunden-Intervall
+
     private void Start()
     {
         currentTime = startTimeInSeconds;
@@ -31,13 +36,36 @@ public class CountdownTimer : MonoBehaviour
 
             UpdateTimerDisplay();
 
+            // 🔁 Ab 15 Sekunden → Alarm jede Sekunde
+            if (currentTime <= 15f)
+            {
+                if (Time.time - lastBeepTime >= 1f) // alle 1 Sekunde
+                {
+                    lastBeepTime = Time.time;
+
+                    if (bombAlarmLoop != null)
+                    {
+                        bombAlarmLoop.time = 0.15f; // Optional: Skip Start
+                        bombAlarmLoop.Play();
+                    }
+                }
+            }
+
             if (currentTime == 0)
             {
                 timerEnded = true;
+
+                // 💥 Explosion Sound abspielen
+                if (bombExplosionSound != null)
+                {
+                    bombExplosionSound.Play();
+                }
+
                 StartCoroutine(PlayExplosionThenReset());
             }
         }
     }
+
 
     private void UpdateTimerDisplay()
     {

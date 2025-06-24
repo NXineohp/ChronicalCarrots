@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      seilPixelated_0: 239591880845650445
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

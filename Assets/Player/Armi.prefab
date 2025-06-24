@@ -152,7 +152,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 2
+  m_Mass: 3
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 1
@@ -223,7 +223,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: ba8cb8546b4fd854880ef2dd5666ac70, type: 3}
   m_Resource: {fileID: 8300000, guid: ba8cb8546b4fd854880ef2dd5666ac70, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.533
+  m_Volume: 0.25
   m_Pitch: 0.55
   Loop: 0
   Mute: 0
@@ -417,7 +417,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 5933969f4a15c4045a55e067087cec73, type: 3}
   m_Resource: {fileID: 8300000, guid: 5933969f4a15c4045a55e067087cec73, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.41
+  m_Volume: 0.25
   m_Pitch: 0.74
   Loop: 0
   Mute: 0

@@ -5616,7 +5616,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 838332349839605770, guid: bad87eac7cebf4140a1514f6e2fa9930, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 44.69699
+      value: 44.5
       objectReference: {fileID: 0}
     - target: {fileID: 838332349839605770, guid: bad87eac7cebf4140a1514f6e2fa9930, type: 3}
       propertyPath: m_LocalPosition.y
@@ -8155,7 +8155,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 5.64
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -8180,7 +8180,7 @@ Transform:
   m_GameObject: {fileID: 1715584566}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.49, y: 0.7, z: -10}
+  m_LocalPosition: {x: -22.61, y: 1.3, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8242,10 +8242,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89c150dadb663974d8120de93f190119, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minX: -19.49
-  maxX: 32
-  minY: 0.7
-  maxY: 13.8
+  minX: -22.61
+  maxX: 34.74
+  minY: 1.3
+  maxY: 13.01
   smoothSpeed: 5
 --- !u!1 &1757341542
 GameObject:

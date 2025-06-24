@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      FahrstuhlPixelated_0: 811802052680044989
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -22,18 +22,16 @@ public class Breakable : MonoBehaviour
             {
                 if (breakSound != null && breakSound.clip != null)
                 {
+                    breakSound.time = 0.2f;        // ⏩ Skip erste 0.2 Sekunden
                     breakSound.Play();
 
-                    // 🔇 Objekt "ausmachen", damit Spieler durchlaufen kann
                     if (col != null) col.enabled = false;
                     if (spr != null) spr.enabled = false;
 
-                    // ✂️ Skript deaktivieren, um keine weiteren Kollisionen zu behandeln
                     enabled = false;
-
-                    // 🧹 Später zerstören, damit der Ton zu Ende spielen kann
-                    Destroy(gameObject, breakSound.clip.length + 0.05f);
+                    Destroy(gameObject, breakSound.clip.length - 0.2f + 0.05f);
                 }
+
                 else
                 {
                     Destroy(gameObject); // kein Sound → sofort löschen
