@@ -1,6 +1,4 @@
-﻿using NUnit.Framework;
-using UnityEditor.UI;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerWASD : MonoBehaviour
 {
