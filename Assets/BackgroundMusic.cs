@@ -1,16 +1,19 @@
 using UnityEngine;
 
-public class BackgroundMusic : MonoBehaviour
+public class MusicPlayer : MonoBehaviour
 {
-    private void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
+    private static MusicPlayer instance;
 
-        // Optional: Verhindern, dass mehrere Musik-Objekte entstehen
-        GameObject[] musicObjs = GameObject.FindGameObjectsWithTag("Music");
-        if (musicObjs.Length > 1)
+    void Awake()
+    {
+        if (instance == null)
         {
-            Destroy(gameObject);
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject); // Verhindert doppelte Musik
         }
     }
 }
