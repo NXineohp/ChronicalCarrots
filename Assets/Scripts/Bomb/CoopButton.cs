@@ -45,6 +45,8 @@ public class CoopButton : _Button_Parent
         {
             CountdownTimer timer = FindFirstObjectByType<CountdownTimer>();
             if (timer != null) timer.PauseTimer();
+
+            UnityEngine.SceneManagement.SceneManager.LoadScene(4);
         }
     }
 }

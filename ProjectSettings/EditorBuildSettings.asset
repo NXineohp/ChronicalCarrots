@@ -17,21 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level_3.unity
     guid: d12e4f08b01540742b76a67c3ae8b842
-  - enabled: 0
-    path: Assets/Scenes/Prototype/Scene_1.unity
-    guid: df950c876e1da5841b7e5227c0efde10
-  - enabled: 0
-    path: Assets/Scenes/Prototype/Scene_2.unity
-    guid: 59f247af7749852499c62a26cd6ce0e8
-  - enabled: 0
-    path: Assets/Scenes/Prototype/Scene_3.unity
-    guid: cccfc5619d8507648b1978c8ec59dda4
-  - enabled: 0
-    path: Assets/Scenes/Prototype/Scene_4.unity
-    guid: 926edad03344b4647a354fe07fc5169e
-  - enabled: 0
-    path: Assets/Scenes/Prototype/ShowWorld.unity
-    guid: 84735024ffa82924ba173b0d21255bb6
+  - enabled: 1
+    path: Assets/Scenes/VictoryScene.unity
+    guid: c19a4494755ca9b47bb4b2676d514089
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
