@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using TMPro;
 using UnityEngine.Video;
+using System;
 
 public class CountdownTimer : MonoBehaviour
 {
@@ -18,10 +19,16 @@ public class CountdownTimer : MonoBehaviour
 
     private float lastBeepTime = 0f;       // ⏱ Für 1-Sekunden-Intervall
 
+    private Color originalColor;
+    private bool fullRangeSoundActivated = false;
+    private float startRangeSound;
+
     private void Start()
     {
         currentTime = startTimeInSeconds;
-        explosionVideoObject?.SetActive(false); // Stelle sicher, dass Video-Objekt zu Beginn deaktiviert ist
+        explosionVideoObject?.SetActive(false);
+        originalColor = timerText.color; // 💾 Speichere Startfarbe
+        startRangeSound = bombAlarmLoop.maxDistance;
     }
 
     private void Update()
@@ -36,10 +43,25 @@ public class CountdownTimer : MonoBehaviour
 
             UpdateTimerDisplay();
 
-            // 🔁 Ab 15 Sekunden → Alarm jede Sekunde
-            if (currentTime <= 15f)
+            // 🔁 Tick-Intervall abhängig von Restzeit
+            if (currentTime <= 30f)
             {
-                if (Time.time - lastBeepTime >= 1f) // alle 1 Sekunde
+                timerText.color = Color.red;
+                float tickInterval = currentTime <= 10f ? 0.5f : 1f;
+                // 🔊 Ab 10 Sekunden → Tick ist im ganzen Level hörbar
+                if (!fullRangeSoundActivated && currentTime <= 10f)
+                {
+                    fullRangeSoundActivated = true;
+
+                    if (bombAlarmLoop != null)
+                    {
+                        bombAlarmLoop.maxDistance = 35f;
+                        // Optional: falls Spatial Blend < 1, sicherstellen:
+                        bombAlarmLoop.spatialBlend = 1f;
+                    }
+                }
+
+                if (Time.time - lastBeepTime >= tickInterval)
                 {
                     lastBeepTime = Time.time;
 
@@ -55,7 +77,6 @@ public class CountdownTimer : MonoBehaviour
             {
                 timerEnded = true;
 
-                // 💥 Explosion Sound abspielen
                 if (bombExplosionSound != null)
                 {
                     bombExplosionSound.Play();
@@ -79,7 +100,16 @@ public class CountdownTimer : MonoBehaviour
         currentTime = startTimeInSeconds;
         timerEnded = false;
         UpdateTimerDisplay();
+        timerText.color = originalColor;
+        fullRangeSoundActivated = false;
+
+        if (bombAlarmLoop != null)
+        {
+            bombAlarmLoop.maxDistance = startRangeSound;     // oder dein Ausgangswert
+            bombAlarmLoop.spatialBlend = 1f;    // bleibt 3D
+        }
     }
+
 
     public void PauseTimer()
     {

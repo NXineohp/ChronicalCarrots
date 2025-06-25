@@ -537,7 +537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fc64daca7a89d6408cd9688d0eb383c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startTimeInSeconds: 90
+  startTimeInSeconds: 120
   timerText: {fileID: 1915014414}
   explosionVideoObject: {fileID: 2132377143}
   videoPlayer: {fileID: 2132377144}
@@ -1488,7 +1488,7 @@ Transform:
   m_GameObject: {fileID: 573917188}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.4, y: 4.3, z: -7.82}
+  m_LocalPosition: {x: 3.4, y: 4.4, z: -7.82}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3455,7 +3455,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3134814450528075935, guid: 510e2376cdf827e4983252bd4d8bf3fa, type: 3}
       propertyPath: targetHeight
-      value: 10.345
+      value: 10.45
       objectReference: {fileID: 0}
     - target: {fileID: 3134814450528075935, guid: 510e2376cdf827e4983252bd4d8bf3fa, type: 3}
       propertyPath: delayBeforeElevate
@@ -3471,7 +3471,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3604559639028851223, guid: 510e2376cdf827e4983252bd4d8bf3fa, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.26
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 3604559639028851223, guid: 510e2376cdf827e4983252bd4d8bf3fa, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4363,7 +4363,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7064456026218956150, guid: 0bd9ca6c36278d948bfbf0ed47c1420f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.25
+      value: -4.3099995
       objectReference: {fileID: 0}
     - target: {fileID: 7064456026218956150, guid: 0bd9ca6c36278d948bfbf0ed47c1420f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5039,6 +5039,10 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3732348453908373867, guid: 9c8e6d29fbe30b5489a9dd49ec8d3f9e, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 0.37
+      objectReference: {fileID: 0}
     - target: {fileID: 3950948591535065670, guid: 9c8e6d29fbe30b5489a9dd49ec8d3f9e, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -5073,7 +5077,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8686024380093528620, guid: 9c8e6d29fbe30b5489a9dd49ec8d3f9e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.38
+      value: 4.5
       objectReference: {fileID: 0}
     - target: {fileID: 8686024380093528620, guid: 9c8e6d29fbe30b5489a9dd49ec8d3f9e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5138,7 +5142,7 @@ MonoBehaviour:
   audioSource: {fileID: 1399327643}
   maxSoundDuration: 0
   targetObject: {fileID: 573917189}
-  activatedPosition: {x: 0.5, y: 6.3, z: -7.82}
+  activatedPosition: {x: 0.5, y: 6.25758, z: -7.82}
   moveSpeed: 8
 --- !u!82 &1399327643 stripped
 AudioSource:
@@ -5883,7 +5887,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8309222527243252408, guid: 3731585df3b6ab8498dc9f5be01ae165, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.03
+      value: -5.09
       objectReference: {fileID: 0}
     - target: {fileID: 8309222527243252408, guid: 3731585df3b6ab8498dc9f5be01ae165, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6625,7 +6629,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 15
+  MaxDistance: 45
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -7206,7 +7210,7 @@ MonoBehaviour:
   maxSoundDuration: 0
   targetObject: {fileID: 1566967298}
   activatedPosition: {x: -7, y: 13.84, z: -7.82}
-  moveSpeed: 4
+  moveSpeed: 5
 --- !u!1 &1915014413
 GameObject:
   m_ObjectHideFlags: 0
@@ -7272,8 +7276,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 83.3
-  m_fontSizeBase: 83.3
+  m_fontSize: 85
+  m_fontSizeBase: 85
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -7340,7 +7344,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 177.68, y: -110}
+  m_AnchoredPosition: {x: 62.3, y: -68.1}
   m_SizeDelta: {x: 361.75146, y: 139.01025}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1993552429

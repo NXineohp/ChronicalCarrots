@@ -27,13 +27,12 @@ public class PlayerWASD : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("isClimbing = " + animator.GetBool("isClimbing"));
         float moveX = 0f;
         if (Input.GetKey(KeyCode.A))
         {
             moveX = -1f;
             animator.SetBool("isWalking", true);
-            if(!animator.GetBool("isClimbing") || !animator.GetBool("isSwinging"))
+            if(!animator.GetBool("isClimbing") && !animator.GetBool("isSwinging"))
             {
                 transform.eulerAngles = new Vector3(0, 180, 0); // Dreht Hasi nach links
             }
@@ -75,7 +74,6 @@ public class PlayerWASD : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.W) && isGrounded)
         {
-            Debug.Log("Jumping!");
             animator.SetTrigger("isJumping");
             sfxSource.PlayOneShot(jumpSound);
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
