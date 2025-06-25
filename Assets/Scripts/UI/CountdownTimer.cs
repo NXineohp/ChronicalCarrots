@@ -2,6 +2,8 @@
 using TMPro;
 using UnityEngine.Video;
 using System;
+using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class CountdownTimer : MonoBehaviour
 {
@@ -10,6 +12,7 @@ public class CountdownTimer : MonoBehaviour
 
     public GameObject explosionVideoObject;      // 🔥 RawImage + VideoPlayer drauf
     public VideoPlayer videoPlayer;              // 🎞️ Deine VideoPlayer-Komponente
+
 
     private float currentTime;
     private bool timerEnded = false;
@@ -75,15 +78,9 @@ public class CountdownTimer : MonoBehaviour
 
             if (currentTime == 0)
             {
-                timerEnded = true;
-
-                if (bombExplosionSound != null)
-                {
-                    bombExplosionSound.Play();
-                }
-
-                StartCoroutine(PlayExplosionThenReset());
+                StartCoroutine(PlayExplosionAndLoadScene());
             }
+
         }
     }
 
@@ -116,18 +113,31 @@ public class CountdownTimer : MonoBehaviour
         enabled = false;
     }
 
-    private System.Collections.IEnumerator PlayExplosionThenReset()
+    private IEnumerator PlayExplosionAndLoadScene()
     {
-        explosionVideoObject.SetActive(true);
-        videoPlayer.Play();
+        if (videoPlayer != null)
+        {
+            explosionVideoObject.SetActive(true); // <--- Das aktiviert das Objekt mit dem VideoPlayer!
 
-        yield return new WaitForSeconds((float)videoPlayer.length);
+            bool videoDone = false;
 
-        explosionVideoObject.SetActive(false);
+            videoPlayer.Prepare();
 
-        ResetManager resetManager = FindFirstObjectByType<ResetManager>();
-        resetManager?.ResetGame();
+            while (!videoPlayer.isPrepared)
+                yield return null;
 
-        ResetTimer(); // optional – falls Timer erneut starten soll
+            videoPlayer.loopPointReached += (vp) => videoDone = true;
+
+            videoPlayer.Play();
+
+            yield return new WaitUntil(() => videoDone);
+        }
+        else
+        {
+            Debug.LogWarning("VideoPlayer nicht gesetzt!");
+        }
+
+        SceneManager.LoadScene(5);
     }
 }
+
